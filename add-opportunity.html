@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>إضافة فرصة استثمارية - أمانة منطقة الحدود الشمالية</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+        .add-opportunity-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(0, 108, 53, 0.1), rgba(0, 168, 107, 0.05));
+            border-radius: var(--radius);
+            border: 1px solid var(--panel-stroke);
+        }
+
+        .page-header h1 {
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            color: var(--muted);
+            font-size: 16px;
+        }
+
+        .form-container {
+            background: var(--panel);
+            border: 1px solid var(--panel-stroke);
+            border-radius: var(--radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-field.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-field label {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .form-field label .required {
+            color: #ff6b6b;
+            font-size: 16px;
+        }
+
+        .form-field input,
+        .form-field select,
+        .form-field textarea {
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--panel-stroke);
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text);
+            font-size: 14px;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.3s ease;
+        }
+
+        .form-field input:focus,
+        .form-field select:focus,
+        .form-field textarea:focus {
+            outline: none;
+            border-color: var(--success);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(0, 168, 107, 0.1);
+        }
+
+        .form-field input[type="file"] {
+            padding: 8px;
+        }
+
+        .map-container {
+            height: 400px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--panel-stroke);
+            margin-bottom: 12px;
+        }
+
+        .map-instructions {
+            background: rgba(0, 168, 107, 0.1);
+            border: 1px solid rgba(0, 168, 107, 0.3);
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: var(--text);
+            font-size: 13px;
+            margin-bottom: 24px;
+        }
+
+        .coordinates-display {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 12px;
+            margin-bottom: 1em;
+        }
+
+        .coordinate-box {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--panel-stroke);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .coordinate-box label {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 4px;
+        }
+
+        .coordinate-box .value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        .checkbox-field {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--panel-stroke);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .checkbox-field:hover {
+            background: rgba(0, 168, 107, 0.1);
+            border-color: var(--success);
+        }
+
+        .checkbox-field input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .checkbox-field label {
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 0;
+        }
+
+        .form-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr auto;
+            gap: 16px;
+            margin-top: 32px;
+            padding-top: 32px;
+            border-top: 1px solid var(--panel-stroke);
+        }
+
+        .btn-submit {
+            background: var(--gradient-1);
+            color: #ffffff;
+            border: none;
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 168, 107, 0.3);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 168, 107, 0.5);
+        }
+
+        .btn-reset {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text);
+            border: 1px solid var(--panel-stroke);
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-reset:hover {
+            background: rgba(255, 107, 107, 0.1);
+            border-color: #ff6b6b;
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.04);
+            color: var(--text);
+            border: 1px solid var(--panel-stroke);
+            padding: 14px 28px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-back:hover {
+            background: rgba(0, 168, 107, 0.1);
+            border-color: var(--success);
+        }
+
+        .image-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .image-preview-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--panel-stroke);
+        }
+
+        .image-preview-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-preview-item .remove-btn {
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            background: rgba(255, 107, 107, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-actions {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="add-opportunity-container">
+        <div class="page-header">
+            <h1>إضافة فرصة استثمارية جديدة</h1>
+            <p>قم بتعبئة النموذج أدناه لإضافة فرصة استثمارية جديدة إلى الخريطة</p>
+        </div>
+
+        <div class="form-container">
+            <form id="opportunityForm">
+                <div class="form-grid">
+                    <!-- Name (Required) -->
+                    <div class="form-field full-width">
+                        <label for="name">اسم الفرصة <span class="required">*</span></label>
+                        <input type="text" id="name" name="name" required placeholder="مثال: مجمع تجاري">
+                    </div>
+
+                    <!-- Plot Number -->
+                    <div class="form-field">
+                        <label for="plotNumber">رقم القطعة</label>
+                        <input type="text" id="plotNumber" name="plotNumber" placeholder="01-25-013001-48015">
+                    </div>
+
+                    <!-- Project Type -->
+                    <div class="form-field">
+                        <label for="projectType">نوع المشروع</label>
+                        <select id="projectType" name="projectType">
+                            <option value="">اختر نوع المشروع</option>
+                            <option value="كبرى">كبرى</option>
+                            <option value="متوسطة">متوسطة</option>
+                        </select>
+                    </div>
+
+                    <!-- Activity (Required) -->
+                    <div class="form-field">
+                        <label for="activity">النشاط <span class="required">*</span></label>
+                        <select id="activity" name="activity" required>
+                            <option value="">اختر النشاط</option>
+                        </select>
+                    </div>
+
+                    <!-- District (Required) -->
+                    <div class="form-field">
+                        <label for="district">الحي <span class="required">*</span></label>
+                        <select id="district" name="district" required>
+                            <option value="">اختر الحي</option>
+                        </select>
+                    </div>
+
+                    <!-- Area (Required) -->
+                    <div class="form-field">
+                        <label for="area">المساحة (م²) <span class="required">*</span></label>
+                        <input type="number" id="area" name="area" required min="0" step="0.01"
+                            placeholder="مثال: 5000">
+                    </div>
+
+                    <!-- Contract Period -->
+                    <div class="form-field">
+                        <label for="contractPeriod">مدة العقد</label>
+                        <input type="text" id="contractPeriod" name="contractPeriod" placeholder="مثال: 25 سنة">
+                    </div>
+
+                    <!-- Bucklet Price -->
+                    <div class="form-field">
+                        <label for="buckletPrice">سعر الكراسة</label>
+                        <input type="number" id="buckletPrice" name="buckletPrice" min="0" step="0.01"
+                            placeholder="مثال: 3000">
+                    </div>
+
+                    <!-- Advertise Date -->
+                    <div class="form-field">
+                        <label for="advertiseDate">تاريخ الإعلان</label>
+                        <input type="date" id="advertiseDate" name="advertiseDate">
+                    </div>
+
+                    <!-- Open Envelopes Date -->
+                    <div class="form-field">
+                        <label for="openEnvelopesDate">تاريخ فتح المظاريف</label>
+                        <input type="date" id="openEnvelopesDate" name="openEnvelopesDate">
+                    </div>
+
+                    <!-- Google Map Link -->
+                    <div class="form-field full-width">
+                        <label for="googleMapLink">رابط خرائط جوجل</label>
+                        <input type="url" id="googleMapLink" name="googleMapLink"
+                            placeholder="https://maps.app.goo.gl/...">
+                    </div>
+
+                    <!-- Images Upload -->
+                    <div class="form-field full-width">
+                        <label for="images">صور الفرصة</label>
+                        <input type="file" id="images" name="images" accept="image/*" multiple>
+                        <div id="imagePreview" class="image-preview"></div>
+                    </div>
+                </div>
+
+                <!-- Map Section -->
+                <div class="form-field full-width">
+                    <label>الموقع على الخريطة <span class="required">*</span></label>
+                    <div class="map-instructions">
+                        📍 انقر على الخريطة لتحديد موقع الفرصة الاستثمارية
+                    </div>
+                    <div id="addMap" class="map-container"></div>
+                    <div class="coordinates-display">
+                        <div class="coordinate-box">
+                            <label>خط الطول (Longitude)</label>
+                            <div class="value" id="lngDisplay">--</div>
+                        </div>
+                        <div class="coordinate-box">
+                            <label>خط العرض (Latitude)</label>
+                            <div class="value" id="latDisplay">--</div>
+                        </div>
+                    </div>
+                    <input type="hidden" id="longitude" name="longitude" required>
+                    <input type="hidden" id="latitude" name="latitude" required>
+                </div>
+
+                <!-- Within 2026 Calendar Checkbox (Required) -->
+                <div class="form-field full-width">
+                    <div class="checkbox-field">
+                        <input type="checkbox" id="within2026Calender" name="within2026Calender" required>
+                        <label for="within2026Calender">الفرصة ضمن روزنامة 2026 <span class="required">*</span></label>
+                    </div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="submit" class="btn-submit">💾 حفظ الفرصة</button>
+                    <button type="reset" class="btn-reset">🔄 إعادة تعيين</button>
+                    <a href="index.html" class="btn-back">← العودة للخريطة</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="data/plots.js"></script>
+    <script>
+        // Initialize Google Maps
+        let map;
+        let marker;
+        const ARAR_CENTER = [30.9753, 41.0389];
+
+        window.initAddMap = function () {
+            // Initialize map
+            map = new google.maps.Map(document.getElementById("addMap"), {
+                center: { lat: ARAR_CENTER[0], lng: ARAR_CENTER[1] },
+                zoom: 13,
+                mapTypeControl: true,
+                streetViewControl: false,
+            });
+
+            // Add click listener to map
+            map.addListener('click', (event) => {
+                placeMarker(event.latLng);
+            });
+
+            // Populate dropdowns from existing data
+            populateDropdowns();
+        };
+
+        function placeMarker(location) {
+            // Remove existing marker if any
+            if (marker) {
+                marker.setMap(null);
+            }
+
+            // Create new marker
+            marker = new google.maps.Marker({
+                position: location,
+                map: map,
+                animation: google.maps.Animation.DROP,
+                icon: {
+                    url: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDUiIGhlaWdodD0iNTUiIHZpZXdCb3g9IjAgMCA0NSA1NSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGRlZnM+CjxmaWx0ZXIgaWQ9Imdsb3ciIHg9Ii01MCUiIHk9Ii01MCUiIHdpZHRoPSIyMDAlIiBoZWlnaHQ9IjIwMCUiPgo8ZmVHYXVzc2lhbkJsdXIgaW49IlNvdXJjZUdyYXBoaWMiIHN0ZERldmlhdGlvbj0iMyIvPgo8ZmVDb21wb3NpdGUgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0iQmx1ciIgb3BlcmF0b3I9ImluIi8+CjwvZmlsdGVyPgo8L2RlZnM+CjxwYXRoIGQ9Ik0yMi41IDQ1QzEzLjUgMzEuNSA0LjUgMjIuNSA0LjUgMTMuNUM0LjUgNS41IDEzLjUgMC41IDIyLjUgMC41QzMxLjUgMC41IDQwLjUgNS41IDQwLjUgMTMuNUM0MC41IDIyLjUgMzEuNSAzMS41IDIyLjUgNDVaIiBmaWxsPSIjMDBhODZiIiBzdHJva2U9IiMwMDZjMzUiIHN0cm9rZS13aWR0aD0iMiIgZmlsdGVyPSJ1cmwoI2dsb3cpIi8+CjxjaXJjbGUgY3g9IjIyLjUiIGN5PSIxMy41IiByPSI3IiBmaWxsPSIjMDA2YzM1Ii8+CjxjaXJjbGUgY3g9IjIyLjUiIGN5PSIxMy41IiByPSI0IiBmaWxsPSIjZmZmZmZmIi8+Cjwvc3ZnPg==',
+                    scaledSize: new google.maps.Size(45, 55),
+                    anchor: new google.maps.Point(22.5, 55)
+                }
+            });
+
+            // Update coordinates
+            const lat = location.lat();
+            const lng = location.lng();
+
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+            document.getElementById('latDisplay').textContent = lat.toFixed(6);
+            document.getElementById('lngDisplay').textContent = lng.toFixed(6);
+        }
+
+        function populateDropdowns() {
+            // Get unique activities and districts from existing data
+            const activities = Array.from(new Set(PLOTS_GEOJSON.features.map(f => f.properties.activity))).sort();
+            const districts = Array.from(new Set(PLOTS_GEOJSON.features.map(f => f.properties.district))).sort();
+
+            const activitySelect = document.getElementById('activity');
+            const districtSelect = document.getElementById('district');
+
+            // Populate activities
+            activities.forEach(activity => {
+                if (activity) {
+                    const option = document.createElement('option');
+                    option.value = activity;
+                    option.textContent = activity;
+                    activitySelect.appendChild(option);
+                }
+            });
+
+            // Populate districts
+            districts.forEach(district => {
+                if (district) {
+                    const option = document.createElement('option');
+                    option.value = district;
+                    option.textContent = district;
+                    districtSelect.appendChild(option);
+                }
+            });
+        }
+
+        // Handle image preview
+        document.getElementById('images').addEventListener('change', function (e) {
+            const preview = document.getElementById('imagePreview');
+            preview.innerHTML = '';
+
+            Array.from(e.target.files).forEach((file, index) => {
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const div = document.createElement('div');
+                    div.className = 'image-preview-item';
+                    div.innerHTML = `
+                        <img src="${event.target.result}" alt="Preview ${index + 1}">
+                        <button type="button" class="remove-btn" onclick="removeImage(${index})">×</button>
+                    `;
+                    preview.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
+        });
+
+        function removeImage(index) {
+            const input = document.getElementById('images');
+            const dt = new DataTransfer();
+            const files = Array.from(input.files);
+
+            files.forEach((file, i) => {
+                if (i !== index) {
+                    dt.items.add(file);
+                }
+            });
+
+            input.files = dt.files;
+            input.dispatchEvent(new Event('change'));
+        }
+
+        // Handle form submission
+        document.getElementById('opportunityForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Validate coordinates
+            if (!document.getElementById('latitude').value || !document.getElementById('longitude').value) {
+                alert('⚠️ يرجى تحديد موقع الفرصة على الخريطة');
+                return;
+            }
+
+            // Collect form data
+            const formData = {
+                type: "Feature",
+                properties: {
+                    within2026Calender: document.getElementById('within2026Calender').checked,
+                    name: document.getElementById('name').value,
+                    plotNumber: document.getElementById('plotNumber').value || "",
+                    projectType: document.getElementById('projectType').value || "",
+                    contractPeriod: document.getElementById('contractPeriod').value || "",
+                    area: parseFloat(document.getElementById('area').value) || 0,
+                    buckletPrice: parseFloat(document.getElementById('buckletPrice').value) || 0,
+                    activity: document.getElementById('activity').value,
+                    district: document.getElementById('district').value,
+                    googleMapLink: document.getElementById('googleMapLink').value || "",
+                    advertiseDate: document.getElementById('advertiseDate').value || "",
+                    openEnvelopesDate: document.getElementById('openEnvelopesDate').value || "",
+                    images: [] // Note: In a real application, you'd upload images to a server
+                },
+                geometry: {
+                    type: "Point",
+                    coordinates: [
+                        parseFloat(document.getElementById('longitude').value),
+                        parseFloat(document.getElementById('latitude').value)
+                    ]
+                }
+            };
+
+            // Display the JSON data
+            console.log('New Opportunity Data:', JSON.stringify(formData, null, 2));
+
+            // Show success message
+            alert('✅ تم إنشاء بيانات الفرصة بنجاح!\n\nيمكنك نسخ البيانات من Console (F12) وإضافتها إلى ملف plots.js');
+
+            // Optionally, you could download the JSON or send it to a server
+            downloadJSON(formData);
+        });
+
+        function downloadJSON(data) {
+            const dataStr = JSON.stringify(data, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `opportunity_${Date.now()}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        // Handle form reset
+        document.getElementById('opportunityForm').addEventListener('reset', function () {
+            if (marker) {
+                marker.setMap(null);
+                marker = null;
+            }
+            document.getElementById('latDisplay').textContent = '--';
+            document.getElementById('lngDisplay').textContent = '--';
+            document.getElementById('imagePreview').innerHTML = '';
+        });
+    </script>
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpL-CJ08OtHODEBTSMBmYPX8xz-YrPi2c&libraries=geometry&callback=initAddMap"
+        async defer></script>
+</body>
+
+</html>

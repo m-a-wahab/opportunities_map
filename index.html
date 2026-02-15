@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>خريطة الفرص الاستثمارية - أمانة منطقة الحدود الشمالية</title>
+
+    <meta property="og:title" content="خريطة الفرص الاستثمارية" />
+    <meta property="og:description" content="سيتي سكيب" />
+    <meta property="og:image" content="https://m-a-wahab.github.io/Investment-Map---Cityscape-2025/images/logo2.png" />
+    <meta property="og:url" content="https://m-a-wahab.github.io/Investment-Map---Cityscape-2025/" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/png"
+        href="https://m-a-wahab.github.io/Investment-Map---Cityscape-2025/images/logo2.png">
+
+    <!-- <meta name="description" content="عرض واجهة خريطة أراضي الاستثمارات بأمانة الحدود الشمالية مع فلاتر تفاعلية للعرض في Cityscape Global." /> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap"
+        rel="stylesheet">
+    <!-- Google Maps will be loaded via JavaScript -->
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+    <!-- Splash Screen -->
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-content">
+            <div class="splash-logo-container">
+                <div class="splash-icon">
+                    <svg viewBox="0 0 100 100" class="city-icon">
+                        <path d="M20,80 L20,40 L35,40 L35,80 M40,80 L40,25 L55,25 L55,80 M60,80 L60,35 L75,35 L75,80"
+                            stroke="currentColor" stroke-width="3" fill="none" class="building-path" />
+                        <circle cx="50" cy="15" r="8" fill="currentColor" class="palm-circle" />
+                    </svg>
+                </div>
+                <h1 class="splash-title">خريطة الفرص الاستثمارية</h1>
+                <p class="splash-subtitle">أمانة منطقة الحدود الشمالية</p>
+                <!-- <div class="splash-event">Cityscape Global 2025</div> -->
+            </div>
+            <div class="splash-stats">
+                <div class="splash-stat">
+                    <div class="stat-number" id="splashStatTotal" data-target="0">0</div>
+                    <div class="stat-label">فرصة مطروحة</div>
+                </div>
+                <!-- <div class="splash-stat">
+                    <div class="stat-number" id="splashStat2026" data-target="0">0</div>
+                    <div class="stat-label">روزنامة 2026</div>
+                </div>
+                <div class="splash-stat">
+                    <div class="stat-number" id="splashStatLeasing" data-target="0">0</div>
+                    <div class="stat-label">التأجير المؤقت</div>
+                </div>
+                <div class="splash-stat">
+                    <div class="stat-number" id="splashStatSeasonal" data-target="0">0</div>
+                    <div class="stat-label">الفاعليات الموسمية</div>
+                </div> -->
+            </div>
+            <button class="splash-enter-btn" onclick="enterApp()">
+                <span>استكشف الفرص</span>
+                <svg class="arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+            </button>
+            <div class="splash-loader">
+                <div class="loader-bar"></div>
+            </div>
+        </div>
+        <div class="splash-bg">
+            <div class="bg-shape shape-1"></div>
+            <div class="bg-shape shape-2"></div>
+            <div class="bg-shape shape-3"></div>
+        </div>
+    </div>
+
+    <!-- Loading Indicator -->
+    <div id="loadingIndicator" class="loading-indicator" style="display: none;">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">جاري التحميل...</div>
+    </div>
+
+    <!-- Main App -->
+    <div id="mainApp" class="main-app" style="display: none;">
+
+        <header class="app-header">
+            <div class="header-logos">
+                <img src="images/logo1.png" alt="" class="header-logo" />
+                <img src="images/logo2.png" alt="" class="header-logo" />
+                <img src="images/logo3.png" alt="" class="header-logo" />
+            </div>
+            <div class="brand">
+                <div class="titles">
+                    <h1>خريطة الفرص الاستثمارية</h1>
+                    <p>أمانة منطقة الحدود الشمالية</p>
+                </div>
+            </div>
+            <div class="header-logos">
+                <img src="images/logo4.png" alt="" class="header-logo" />
+                <img src="images/logo5.png" alt="" class="header-logo" />
+            </div>
+        </header>
+
+        <!-- Quick Stats Bar -->
+        <!-- <div class="quick-stats-bar">
+            <div class="quick-stat">
+                <div class="quick-stat-icon">📊</div>
+                <div class="quick-stat-content">
+                    <div class="quick-stat-value" id="quickStatTotal">0</div>
+                    <div class="quick-stat-label">إجمالي القطع</div>
+                </div>
+            </div>
+            <div class="quick-stat">
+                <div class="quick-stat-icon">📅</div>
+                <div class="quick-stat-content">
+                    <div class="quick-stat-value" id="quickStat2026">0</div>
+                    <div class="quick-stat-label">روزنامة 2026</div>
+                </div>
+            </div>
+            <div class="quick-stat">
+                <div class="quick-stat-icon">🏪</div>
+                <div class="quick-stat-content">
+                    <div class="quick-stat-value" id="quickStatLeasing">0</div>
+                    <div class="quick-stat-label">التأجير المؤقت</div>
+                </div>
+            </div>
+            <div class="quick-stat">
+                <div class="quick-stat-icon">🎉</div>
+                <div class="quick-stat-content">
+                    <div class="quick-stat-value" id="quickStatSeasonal">0</div>
+                    <div class="quick-stat-label">الفاعليات الموسمية</div>
+                </div>
+            </div>
+        </div> -->
+
+        <main class="layout">
+            <aside class="sidebar" aria-label="لوحة التحكم">
+                <!-- Search Bar -->
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 ابحث عن فرصة..." />
+                    <button class="search-btn" id="searchBtn">بحث</button>
+                </div>
+
+                <!-- Section 1: Investment Opportunities (الفرص الاستثمارية) -->
+                <div class="sidebar-section" id="investmentSection">
+                    <div class="section-header" onclick="toggleSection('investmentSection')">
+                        <h3 class="section-title">
+                            <span>💼</span>
+                            الفرص الاستثمارية
+                        </h3>
+                        <div class="section-toggle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="section-content">
+                        <section class="panel">
+                            <h2>فلاتر البحث</h2>
+                            <div class="field">
+                                <label for="districtSelect">الحي</label>
+                                <select id="districtSelect">
+                                    <option value="all">الكل</option>
+                                </select>
+                            </div>
+
+                            <!-- <div class="field">
+                                <label>نوع المشروع</label>
+                                <div class="segmented" role="group" aria-label="project type">
+                                    <button class="seg active" data-type="all">الكل</button>
+                                    <button class="seg" data-type="كبرى">كبرى</button>
+                                    <button class="seg" data-type="متوسطة">متوسطة</button>
+                                </div>
+                                <select id="typeSelect" hidden>
+                                    <option value="all" selected>الكل</option>
+                                    <option value="كبرى">كبرى</option>
+                                    <option value="متوسطة">متوسطة</option>
+                                </select>
+                            </div> -->
+
+                            <div class="field">
+                                <label for="activitySelect">النشاط</label>
+                                <select id="activitySelect">
+                                    <option value="all">الكل</option>
+                                </select>
+                            </div>
+
+                            <!-- <div class="field">
+                                <label class="checkbox-label"
+                                    style="cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--text);">
+                                    <input type="checkbox" id="within2026Check"
+                                        style="width: auto; margin: 0; cursor: pointer;" />
+                                    <span>الفرص الاستثمارية المطروحة بروزنامة 2026</span>
+                                </label>
+                            </div> -->
+
+                            <div class="field">
+                                <label>المساحة (م²)</label>
+                                <div class="range-rows">
+                                    <div class="range-row">
+                                        <input id="areaMinRange" type="range" min="0" max="5000000" step="500"
+                                            value="0" />
+                                        <div class="range-value">من: <span id="areaMinVal">0</span></div>
+                                    </div>
+                                    <div class="range-row">
+                                        <input id="areaMaxRange" type="range" min="0" max="5000000" step="500"
+                                            value="5000000" />
+                                        <div class="range-value">إلى: <span id="areaMaxVal">5,000,000</span></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="actions">
+                                <button id="applyFilters" class="btn primary">تطبيق الفلاتر</button>
+                                <button id="resetFilters" class="btn ghost">إعادة ضبط</button>
+                            </div>
+                        </section>
+
+                        <section class="panel stats" id="statsPanel" style="display: none;">
+                            <h2>ملخص النتائج</h2>
+                            <div class="stats-grid">
+                                <div class="stat">
+                                    <div class="label">عدد الفرص</div>
+                                    <div class="value" id="statFilteredCount">0</div>
+                                </div>
+                                <!-- <div class="stat">
+                                    <div class="label">مشاريع كبرى</div>
+                                    <div class="value" id="statFilteredGrantProject">0</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="label">مشاريع متوسطة</div>
+                                    <div class="value" id="statFilteredMediumProject">0</div>
+                                </div> -->
+                            </div>
+                        </section>
+
+                        <!-- <section class="panel legend">
+                            <h2>المخطط التوضيحي</h2>
+                            <ul>
+                                <li><span class="key swatch invested"></span> مشاريع كبرى</li>
+                                <li><span class="key swatch pending"></span> مشاريع متوسطة</li>
+                            </ul>
+                        </section> -->
+
+                        <!-- <section class="panel district-charts" id="districtCharts" style="display: none;">
+                            <h2>إحصائيات الحي</h2>
+                            <div class="chart-container">
+                                <h3>نوع المشروع</h3>
+                                <canvas id="investmentChart"></canvas>
+                            </div>
+                            <div class="chart-container">
+                                <h3>توزيع الأنشطة</h3>
+                                <canvas id="projectTypeChart"></canvas>
+                            </div>
+                        </section> -->
+                    </div>
+                </div>
+
+                <!-- Section 2: Temporary Leasing (التأجير المؤقت) -->
+                <!-- <div class="sidebar-section collapsed" id="leasingSection">
+                    <div class="section-header" onclick="toggleSection('leasingSection')">
+                        <h3 class="section-title">
+                            <span>🏪</span>
+                            التأجير المؤقت
+                        </h3>
+                        <div class="section-toggle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="section-content">
+                        <section class="panel">
+                            <h2>فلاتر التأجير المؤقت</h2>
+
+                            <div class="field">
+                                <label for="leasingActivitySelect">النشاط</label>
+                                <select id="leasingActivitySelect">
+                                    <option value="all">الكل</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="leasingDistrictSelect">الحي</label>
+                                <select id="leasingDistrictSelect">
+                                    <option value="all">الكل</option>
+                                </select>
+                            </div>
+
+                            <div class="actions">
+                                <button id="applyLeasingFilters" class="btn primary">تطبيق الفلاتر</button>
+                                <button id="resetLeasingFilters" class="btn ghost">إعادة ضبط</button>
+                            </div>
+                        </section>
+
+                        <section class="panel stats">
+                            <h2>ملخص النتائج</h2>
+                            <div class="stats-grid">
+                                <div class="stat">
+                                    <div class="label">عدد المواقع</div>
+                                    <div class="value" id="statLeasingCount">0</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="label">إجمالي المساحة</div>
+                                    <div class="value" id="statLeasingArea">0</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="label">الأنشطة</div>
+                                    <div class="value" id="statLeasingActivities">0</div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="panel legend">
+                            <h2>المخطط التوضيحي</h2>
+                            <ul>
+                                <li><span class="key swatch"
+                                        style="background: rgba(255, 152, 0, 0.7); border: 1px solid #FF9800;"></span>
+                                    التأجير المؤقت</li>
+                            </ul>
+                        </section>
+                    </div>
+                </div> -->
+
+                <!-- Section 3: Seasonal Events (الفاعليات الموسمية) -->
+                <!-- <div class="sidebar-section collapsed" id="eventsSection">
+                    <div class="section-header" onclick="toggleSection('eventsSection')">
+                        <h3 class="section-title">
+                            <span>🎉</span>
+                            الفاعليات الموسمية
+                        </h3>
+                        <div class="section-toggle">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="6 9 12 15 18 9"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="section-content">
+                        <section class="filters">
+                            <div class="field">
+                                <label for="seasonalActivitySelect">النشاط</label>
+                                <select id="seasonalActivitySelect">
+                                    <option value="all">الكل</option>
+                                </select>
+                            </div>
+
+                            <div class="field">
+                                <label for="seasonalDistrictSelect">الحي</label>
+                                <select id="seasonalDistrictSelect">
+                                    <option value="all">الكل</option>
+                                </select>
+                            </div>
+
+                            <div class="actions">
+                                <button id="applySeasonalFilters" class="btn primary">تطبيق الفلاتر</button>
+                                <button id="resetSeasonalFilters" class="btn ghost">إعادة ضبط</button>
+                            </div>
+                        </section>
+
+                        <section class="panel stats">
+                            <h2>ملخص النتائج</h2>
+                            <div class="stats-grid">
+                                <div class="stat">
+                                    <div class="label">عدد المواقع</div>
+                                    <div class="value" id="statSeasonalCount">0</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="label">إجمالي المساحة</div>
+                                    <div class="value" id="statSeasonalArea">0</div>
+                                </div>
+                                <div class="stat">
+                                    <div class="label">الأنشطة</div>
+                                    <div class="value" id="statSeasonalActivities">0</div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="panel legend">
+                            <h2>المخطط التوضيحي</h2>
+                            <ul>
+                                <li><span class="key swatch"
+                                        style="background: rgba(156, 39, 176, 0.7); border: 1px solid #9C27B0;"></span>
+                                    فاعليات موسمية</li>
+                            </ul>
+                        </section>
+                    </div>
+                </div> -->
+            </aside>
+
+            <section class="map-wrap">
+                <div id="map" role="region" aria-label="خريطة مدينة عرعر"></div>
+
+                <!-- Floating Action Buttons -->
+                <div class="floating-actions">
+                    <button class="fab" id="recenterBtn" title="العودة لمركز المدينة">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                    </button>
+                    <button class="fab" id="fullscreenBtn" title="ملء الشاشة">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path
+                                d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+                        </svg>
+                    </button>
+                </div>
+
+                <div class="floating-card" id="infoCard" aria-live="polite">
+                    <div class="card-header">
+                        <div class="card-icon">🏗️</div>
+                        <div class="card-title" id="infoTitle">تفاصيل قطعة الأرض</div>
+                    </div>
+                    <div class="card-body">
+                        <div class="line"><span>رقم الفرصة</span><strong id="infoPlotNumber">—</strong></div>
+                        <div class="line"><span>النشاط</span><strong id="infoActivity">—</strong></div>
+                        <div class="line"><span>الحي</span><strong id="infoDistrict">—</strong></div>
+                        <div class="line"><span>المساحة</span><strong id="infoArea">—</strong></div>
+                        <div class="line"><span>مدة العقد</span><strong id="infoContractPeriod">—</strong></div>
+                        <div class="line"><span>سعر كراسة الشروط</span><strong id="infoBucketPrice">—</strong></div>
+                        <div class="line"><span>تاريخ الإعلان</span><strong id="infoAdvertiseDate">—</strong></div>
+                        <div class="line"><span>تاريخ فتح المظاريف</span><strong id="infoOpenEnvelopesDate">—</strong>
+                        </div>
+                    </div>
+                    <div id="infoImages"></div>
+                    <div class="card-actions" id="cardActions" style="display: none;">
+                        <a id="btnForsa" class="btn primary small" target="_blank" href="#">الانتقال لمنصة فرص</a>
+                        <a id="btnDesCard" class="btn ghost small" target="_blank" href="#">كارت الوصف</a>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="app-footer">
+            <div class="footer-section">
+                <div class="footer-logo">🏛️</div>
+                <div class="footer-text">
+                    <strong>أمانة منطقة الحدود الشمالية</strong>
+                    <!-- <span>مدينة عرعر</span> -->
+                </div>
+            </div>
+            <!-- <div class="footer-section">
+                <span class="footer-badge">Cityscape Global 2025</span>
+            </div>
+            <div class="footer-section footer-links">
+                <a href="#" class="footer-link">📞 تواصل معنا</a>
+                <a href="#" class="footer-link">📧 البريد الإلكتروني</a>
+                <a href="#" class="footer-link">🌐 الموقع الرسمي</a>
+            </div> -->
+        </footer>
+    </div>
+    <!-- End Main App -->
+
+    <!-- Image Viewer -->
+    <div class="image-viewer" id="imageViewer" style="display: none;">
+        <img id="viewerImg" src="" alt="عرض الصورة" />
+        <button class="whatsapp-share-btn" id="whatsappShareBtn" title="مشاركة على واتساب">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path
+                    d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.149-.67.149-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414-.074-.123-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"
+                    fill="#25D366" />
+            </svg>
+        </button>
+    </div>
+
+    <script src="data/plots.js"></script>
+    <script>
+        // Toggle section collapse/expand
+        function toggleSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.classList.toggle('collapsed');
+            }
+        }
+
+        // Define initMap globally before loading Google Maps
+        window.initMap = function () {
+            console.log('Google Maps loaded, initializing app...');
+            // Load app.js after Google Maps is ready
+            const script = document.createElement('script');
+            script.src = 'app.js';
+            document.body.appendChild(script);
+        };
+    </script>
+
+    <!-- <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpL-CJ08OtHODEBTSMBmYPX8xz-YrPi2c&libraries=geometry&callback=initMap"
+        async defer></script> -->
+
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCgegjkYNmV6-ntq4EidYQU9XTzUxR_F_U&libraries=geometry&callback=initMap"
+        async defer></script>
+
+    <script src="splash.js"></script>
+</body>
+
+</html>
