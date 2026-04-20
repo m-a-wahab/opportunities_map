@@ -404,10 +404,23 @@
                     </button>
                 </div>
 
-                <div class="floating-card" id="infoCard" aria-live="polite">
-                    <div class="card-header">
+                <div class="floating-card" id="infoCard" style="display: none;" aria-live="polite">
+                    <div class="card-header" onclick="toggleInfoCard()">
                         <div class="card-icon">🏗️</div>
                         <div class="card-title" id="infoTitle">تفاصيل قطعة الأرض</div>
+                        <div class="card-header-actions">
+                            <button class="card-toggle-btn" title="طي/توسيع">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="6 9 12 15 18 9"></polyline>
+                                </svg>
+                            </button>
+                            <button class="card-close-btn" onclick="event.stopPropagation(); closeInfoCard()" title="إغلاق">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
                     </div>
                     <div class="card-body">
                         <div class="line"><span>رقم الفرصة</span><strong id="infoPlotNumber">—</strong></div>
@@ -471,13 +484,30 @@
             }
         }
 
+        // Toggle info card collapse/expand
+        function toggleInfoCard() {
+            const card = document.getElementById('infoCard');
+            if (card) {
+                card.classList.toggle('collapsed');
+            }
+        }
+
+        // Close info card completely
+        function closeInfoCard() {
+            const card = document.getElementById('infoCard');
+            if (card) {
+                card.style.display = 'none';
+                card.classList.remove('collapsed');
+            }
+        }
+
         // Define initMap globally before loading Google Maps
         window.initMap = function () {
             console.log('Google Maps loaded, initializing app...');
             // Load app.js after Google Maps is ready
-            const script = document.createElement('script');
-            script.src = 'app.js';
-            document.body.appendChild(script);
+                const script = document.createElement('script');
+                script.src = 'app.js';
+                document.body.appendChild(script);
         };
     </script>
 

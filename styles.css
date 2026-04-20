@@ -837,6 +837,69 @@ select option:checked {
   border-color: var(--success);
 }
 
+/* Info Card Header Actions */
+.floating-card .card-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: auto;
+}
+
+.floating-card .card-toggle-btn,
+.floating-card .card-close-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  border: 1px solid var(--panel-stroke);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.floating-card .card-toggle-btn:hover,
+.floating-card .card-close-btn:hover {
+  background: rgba(0, 168, 107, 0.15);
+  border-color: var(--success);
+  color: var(--text);
+}
+
+.floating-card .card-toggle-btn svg,
+.floating-card .card-close-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.floating-card .card-toggle-btn svg {
+  transition: transform 0.3s ease;
+}
+
+.floating-card.collapsed .card-toggle-btn svg {
+  transform: rotate(-90deg);
+}
+
+.floating-card .card-body,
+.floating-card #infoImages,
+.floating-card .card-actions {
+  max-height: 600px;
+  opacity: 1;
+  transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+}
+
+.floating-card.collapsed .card-body,
+.floating-card.collapsed #infoImages,
+.floating-card.collapsed .card-actions {
+  max-height: 0;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+}
+
 /* Image viewer & mini-map mode */
 .image-viewer {
   position: absolute;

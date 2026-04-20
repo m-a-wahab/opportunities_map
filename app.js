@@ -20,7 +20,22 @@ document.addEventListener('DOMContentLoaded', () => {
   const ARAR_CENTER = [30.9753, 41.0389];
 
   // Initialize Google Map
-  const map = new google.maps.Map(document.getElementById("map"), {
+  const mapDiv = document.getElementById("map");
+  if (!mapDiv) {
+    console.warn('Map div not found yet, waiting for DOM...');
+    const waitForMap = setInterval(() => {
+      const div = document.getElementById("map");
+      if (div) {
+        clearInterval(waitForMap);
+        initApp(div);
+      }
+    }, 100);
+    return;
+  }
+  initApp(mapDiv);
+
+  function initApp(mapDiv) {
+  const map = new google.maps.Map(mapDiv, {
     center: { lat: ARAR_CENTER[0], lng: ARAR_CENTER[1] },
     zoom: 13,
     minZoom: 8,
@@ -840,6 +855,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   function resetInfoPanel() {
+    const infoCard = document.getElementById('infoCard');
+    if (infoCard) {
+      infoCard.style.display = 'none';
+      infoCard.classList.remove('collapsed');
+    }
 
     infoTitle.textContent = 'قطعة أرض';
     infoPlotNumber.textContent = '-';
@@ -873,6 +893,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Show the card instantly
     infoCard.style.display = 'block';
+    infoCard.classList.remove('collapsed');
 
     // Force reflow
     infoCard.offsetHeight;
@@ -1297,7 +1318,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const p = f.properties;
       return (
         (p.name && p.name.toLowerCase().includes(lowerQuery)) ||
-        (p.plotNumber && p.plotNumber.toLowerCase().includes(lowerQuery)) ||
+        (p.forsaNumber && p.forsaNumber.toLowerCase().includes(lowerQuery)) ||
         (p.district && p.district.toLowerCase().includes(lowerQuery)) ||
         (p.activity && p.activity.toLowerCase().includes(lowerQuery))
       );
@@ -1311,7 +1332,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Find the index in the original PLOTS_GEOJSON to get the correct marker
     const originalIndex = PLOTS_GEOJSON.features.findIndex(f =>
       f.properties.name === foundFeature.properties.name &&
-      f.properties.plotNumber === foundFeature.properties.plotNumber &&
+      f.properties.forsaNumber === foundFeature.properties.forsaNumber &&
       f.properties.district === foundFeature.properties.district
     );
 
@@ -1339,6 +1360,40 @@ document.addEventListener('DOMContentLoaded', () => {
       infoBucketPrice.textContent = p.buckletPrice || '-';
       infoAdvertiseDate.textContent = p.advertiseDate || '-';
       infoOpenEnvelopesDate.textContent = p.openEnvelopesDate || '-';
+
+      // Update Buttons
+          const cardActions = document.getElementById('cardActions');
+          const btnForsa = document.getElementById('btnForsa');
+          const btnDesCard = document.getElementById('btnDesCard');
+
+          if (cardActions && btnForsa && btnDesCard) {
+            let hasActions = false;
+
+            if (p.forusLink) {
+              btnForsa.href = p.forusLink;
+              btnForsa.style.display = '';
+              hasActions = true;
+            } else {
+              btnForsa.style.display = 'none';
+            }
+
+            if (p.desCard && (Array.isArray(p.desCard) ? p.desCard.length > 0 : p.desCard)) {
+              // If desCard is an array, take the first one, or join them? Usually PDF link is one. 
+              // Looking at data: desCard: ["desCards/1/1.pdf"]
+              const link = Array.isArray(p.desCard) ? p.desCard[0] : p.desCard;
+              btnDesCard.href = link;
+              btnDesCard.style.display = '';
+              hasActions = true;
+            } else {
+              btnDesCard.style.display = 'none';
+            }
+
+            if (hasActions) {
+              cardActions.style.display = 'flex';
+            } else {
+              cardActions.style.display = 'none';
+            }
+          }
 
       // Render images
       // if (infoImages) {
@@ -1386,7 +1441,9 @@ document.addEventListener('DOMContentLoaded', () => {
         map.setZoom(Math.min(map.getZoom(), 16));
 
         // Show info card without animation for polygons
-        document.getElementById('infoCard').style.display = 'block';
+        const infoCard = document.getElementById('infoCard');
+        infoCard.style.display = 'block';
+        infoCard.classList.remove('collapsed');
       }
     } else {
       alert('لم يتم العثور على نتائج');
@@ -1434,4 +1491,5 @@ document.addEventListener('DOMContentLoaded', () => {
   const filteredGeo = applyFiltersToData();
   // Initial render
   renderPlots(filteredGeo);
+  } // end initApp
 })();
