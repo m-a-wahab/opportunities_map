@@ -294,9 +294,9 @@ const PLOTS_GEOJSON = {
       type: "Feature",
       properties: {
         forsaNumber: "01-26-013001-7001",
-        name:"استراحة",
+        name:"محلات تجارية",
         contractPeriod: "25 سنة",
-        area: 2080.0,
+        area: 1599.93,
         buckletPrice: 2000.0,
         activity: "الأنشطة التجارية",
         district: "حي النسيم",
@@ -305,7 +305,7 @@ const PLOTS_GEOJSON = {
         openEnvelopesDate: "16/06/2026",
         desCard: ["desCards/39/39.pdf"],
       },
-      geometry: { type: "Point", coordinates: [41.052472, 30.971694] },
+      geometry: { type: "Point", coordinates: [41.0563056, 30.9774444] },
     },
   ],
 };
