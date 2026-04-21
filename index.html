@@ -385,8 +385,20 @@
                 </div> -->
             </aside>
 
+            <!-- Sidebar Drawer Backdrop (mobile only) -->
+            <div class="sidebar-backdrop" id="sidebarBackdrop" onclick="closeSidebarDrawer()"></div>
+
             <section class="map-wrap">
                 <div id="map" role="region" aria-label="خريطة مدينة عرعر"></div>
+
+                <!-- Sidebar Drawer Toggle (mobile only) -->
+                <button class="sidebar-drawer-toggle" id="sidebarDrawerToggle" onclick="toggleSidebarDrawer()" title="لوحة التحكم">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
 
                 <!-- Floating Action Buttons -->
                 <div class="floating-actions">
@@ -501,13 +513,34 @@
             }
         }
 
+        // Sidebar drawer toggle (mobile)
+        function toggleSidebarDrawer() {
+            const sidebar = document.querySelector('.sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            if (sidebar) sidebar.classList.toggle('drawer-open');
+            if (backdrop) backdrop.classList.toggle('active');
+        }
+
+        function closeSidebarDrawer() {
+            const sidebar = document.querySelector('.sidebar');
+            const backdrop = document.getElementById('sidebarBackdrop');
+            if (sidebar) sidebar.classList.remove('drawer-open');
+            if (backdrop) backdrop.classList.remove('active');
+        }
+
         // Define initMap globally before loading Google Maps
         window.initMap = function () {
             console.log('Google Maps loaded, initializing app...');
-            // Load app.js after Google Maps is ready
+            function loadApp() {
                 const script = document.createElement('script');
                 script.src = 'app.js';
                 document.body.appendChild(script);
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', loadApp);
+            } else {
+                loadApp();
+            }
         };
     </script>
 

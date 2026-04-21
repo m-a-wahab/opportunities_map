@@ -214,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function formatArea(value) {
     if (!Number.isFinite(value)) return "0 م²";
-    return new Intl.NumberFormat("ar-SA").format(value) + " م²";
+    return new Intl.NumberFormat("en-US").format(value) + " م²";
   }
 
   function computeStats(features) {

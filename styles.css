@@ -1207,6 +1207,54 @@ select option:checked {
   color: #0c1412;
 }
 
+/* Sidebar Drawer - mobile only */
+.sidebar-drawer-toggle {
+  display: none;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  z-index: 550;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid var(--panel-stroke);
+  background: linear-gradient(180deg, rgba(12, 20, 18, 0.95), rgba(8, 12, 11, 0.90));
+  backdrop-filter: blur(20px);
+  color: var(--text);
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+.sidebar-drawer-toggle:hover {
+  background: rgba(0, 168, 107, 0.2);
+  border-color: var(--success);
+}
+
+.sidebar-drawer-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+
+.sidebar-backdrop {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 598;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  cursor: pointer;
+}
+
+.sidebar-backdrop.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 /* Responsive */
 @media (max-width: 1100px) {
   .layout {
@@ -1229,17 +1277,52 @@ select option:checked {
 @media (max-width: 900px) {
   .layout {
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: 1fr;
   }
 
   .sidebar {
-    order: 2;
-    max-height: 40vh;
+    position: fixed;
+    top: 62px;
+    right: 0;
+    width: 85vw;
+    max-width: 360px;
+    height: calc(100vh - 70px);
+    z-index: 599;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+    border-left: 1px solid var(--panel-stroke);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.5);
+    padding-top: 20px;
+    grid-column: 1;
+    grid-row: 1;
+    background: radial-gradient(1200px 800px at 80% -10%, #10231d, var(--bg));
+  }
+
+  .sidebar.drawer-open {
+    transform: translateX(0);
+  }
+
+  .sidebar-drawer-toggle {
+    display: flex;
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    pointer-events: none;
+    top: 62px;
+  }
+
+  .sidebar-backdrop.active {
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .map-wrap {
-    order: 1;
-    min-height: 50vh;
+    grid-column: 1;
+    grid-row: 1;
+    min-height: unset;
+    height: 100%;
   }
 
   .app-header {
