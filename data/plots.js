@@ -1,23 +1,23 @@
 const PLOTS_GEOJSON = {
   type: "FeatureCollection",
   features: [
-    {
-      type: "Feature",
-      properties: {
-        forsaNumber: "01-26-013001-5007",
-        name: "متعدد الاستخدام",
-        contractPeriod: "25 سنة",
-        area: 18947.24,
-        buckletPrice: 3000.0,
-        activity: "الأنشطة التجارية",
-        district: "حي المروج",
-        forusLink: "https://furas.momah.gov.sa/ar/opportunities/01-26-013001-5007",
-        advertiseDate: "08/03/2026",
-        openEnvelopesDate: "05/05/2026",
-        desCard: ["desCards/31/31.pdf"],
-      },
-      geometry: { type: "Point", coordinates: [41.06918, 31.011944] },
-    },
+    // {
+    //   type: "Feature",
+    //   properties: {
+    //     forsaNumber: "01-26-013001-5007",
+    //     name: "متعدد الاستخدام",
+    //     contractPeriod: "25 سنة",
+    //     area: 18947.24,
+    //     buckletPrice: 3000.0,
+    //     activity: "الأنشطة التجارية",
+    //     district: "حي المروج",
+    //     forusLink: "https://furas.momah.gov.sa/ar/opportunities/01-26-013001-5007",
+    //     advertiseDate: "08/03/2026",
+    //     openEnvelopesDate: "05/05/2026",
+    //     desCard: ["desCards/31/31.pdf"],
+    //   },
+    //   geometry: { type: "Point", coordinates: [41.06918, 31.011944] },
+    // },
     {
       type: "Feature",
       properties: {
