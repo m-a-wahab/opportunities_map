@@ -23,7 +23,19 @@ function animateNumber(element) {
 window.addEventListener('DOMContentLoaded', () => {
   // Calculate stats if PLOTS_GEOJSON is available
   if (typeof PLOTS_GEOJSON !== 'undefined' && PLOTS_GEOJSON.features) {
-    const allFeatures = PLOTS_GEOJSON.features;
+   
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+      
+    const allFeatures = PLOTS_GEOJSON.features.filter(f => {
+      // Check if feature has envelopeDate and it's before today
+      if (f.properties && f.properties.openEnvelopesDate) {
+        const [day, month, year] = f.properties.openEnvelopesDate.split('/');
+        const featureDate = new Date(year, month - 1, day);
+        if(featureDate < today) return false;
+      }
+      return true;
+    });
     const totalCount = allFeatures.length;
     const count2026 = allFeatures.filter(f => (f.type === 'Feature' || !f.type) && f.properties.within2026Calender === true).length;
     const countLeasing = allFeatures.filter(f => f.type === 'Temporary_Leasing').length;

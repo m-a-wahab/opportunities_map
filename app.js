@@ -409,6 +409,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // if (f.type === 'Temporary_Leasing' || f.type === 'Seasonal_Event') return false;
 
       const p = f.properties;
+      
       if (currentFilters.district !== "all" && p.district !== currentFilters.district) return false;
       if (currentFilters.activity !== "all" && p.activity !== currentFilters.activity) return false;
       // if (currentFilters.projectType !== "all" && p.projectType !== currentFilters.projectType) return false;
@@ -416,6 +417,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (currentFilters.minArea != null && area < currentFilters.minArea) return false;
       if (currentFilters.maxArea != null && area > currentFilters.maxArea) return false;
       // if (currentFilters.within2026 && !p.within2026Calender) return false;
+      // Filter out features where openEnvelopesDate has passed
+      if (p.openEnvelopesDate) {
+        const [day, month, year] = p.openEnvelopesDate.split('/');
+        const envelopeDate = new Date(year, month - 1, day);
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        if (envelopeDate < today) return false;
+      }
       return true;
     });
     return { type: "FeatureCollection", features: filtered };
