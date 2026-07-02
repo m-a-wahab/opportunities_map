@@ -251,7 +251,7 @@ const PLOTS_GEOJSON = {
         district: "حي الصالحية",
         forusLink: "https://furas.momah.gov.sa/opportunity/01-25-013001-48006?type=Investment",
         advertiseDate: "13/04/2026",
-        openEnvelopesDate: "2/07/2026",
+        openEnvelopesDate: "1/07/2026",
         desCard: ["desCards/47/47.pdf"],
       },
       geometry: { type: "Point", coordinates: [41.0513934, 30.9821899] },
