@@ -311,7 +311,7 @@ const PLOTS_GEOJSON = {
       type: "Feature",
       properties: {
         forsaNumber: "01-26-013001-25004",
-        name:" كشك لتأجير الدراجات الهوائية وسكوترات كهربائية",
+        name:"مجمع تجاري",
         contractPeriod: "25 سنة",
         area: 3001.65,
         buckletPrice: 2000.0,
