@@ -44,7 +44,7 @@ const PLOTS_GEOJSON = {
         area: 6888.0,
         buckletPrice: 2000.0,
         activity: "الأنشطة الاجتماعية",
-        district: "حي اشبيلية",
+        district: "حي اشبيليا",
         forusLink: "https://furas.momah.gov.sa/opportunity/01-26-013001-17017?type=Investment",
         advertiseDate: "18/08/2026",
         openEnvelopesDate: "20/10/2026",
