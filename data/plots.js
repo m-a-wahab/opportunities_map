@@ -458,7 +458,7 @@ const PLOTS_GEOJSON = {
         openEnvelopesDate: "20/10/2026",
         desCard: ["desCards/32.pdf"],
       },
-      geometry: { type: "Point", coordinates: [41.008358, 30.997499] },
+      geometry: { type: "Point", coordinates: [41.152254, 31.0016107] },
     },
     {
       type: "Feature",
