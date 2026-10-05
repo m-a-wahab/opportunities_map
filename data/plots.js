@@ -417,7 +417,7 @@ const PLOTS_GEOJSON = {
         contractPeriod: "20 سنة",
         area: 2137.13,
         buckletPrice: 2000.0,
-        activity: "الأنشطة السياحية",
+        activity: "الأنشطة التجارية",
         district: "حي المروج",
         forusLink: "https://furas.momah.gov.sa/opportunity/01-26-013001-25003?type=Investment",
         advertiseDate: "10/08/2026",
