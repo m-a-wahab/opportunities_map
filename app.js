@@ -778,6 +778,7 @@ document.addEventListener('DOMContentLoaded', () => {
           //   map.fitBounds(polyBounds);
           // });
 
+          polygon._featureData = feature;
           plotsLayer.push(polygon);
           itemCount++;
         });
@@ -1338,15 +1339,10 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Find the index in the original PLOTS_GEOJSON to get the correct marker
-    const originalIndex = PLOTS_GEOJSON.features.findIndex(f =>
-      f.properties.name === foundFeature.properties.name &&
-      f.properties.forsaNumber === foundFeature.properties.forsaNumber &&
-      f.properties.district === foundFeature.properties.district
-    );
+    // Find the rendered marker/polygon for this feature (plotsLayer only holds filtered features)
+    const mapItem = plotsLayer && plotsLayer.find(item => item._featureData === foundFeature);
 
-    if (originalIndex !== -1 && plotsLayer && plotsLayer[originalIndex]) {
-      const mapItem = plotsLayer[originalIndex];
+    if (mapItem) {
       const feature = foundFeature;
 
       // Reset previous marker if exists

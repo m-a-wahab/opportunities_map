@@ -242,6 +242,23 @@ const PLOTS_GEOJSON = {
     {
       type: "Feature",
       properties: {
+        forsaNumber: "01-26-013001-25013",
+        name:"  بيع مواد البناء",
+        contractPeriod: "15 سنة",
+        area: 1200,
+        buckletPrice: 2000.0,
+        activity: "الأنشطة التجارية",
+        district: "حي الصقارين",
+        forusLink: "https://furas.momah.gov.sa/opportunity/01-26-013001-25013?type=Investment",
+        advertiseDate: "10/08/2026",
+        openEnvelopesDate: "20/10/2026",
+        desCard: ["desCards/26.pdf"],
+      },
+      geometry: { type: "Point", coordinates: [41.057057, 31.018516] },
+    },
+    {
+      type: "Feature",
+      properties: {
         forsaNumber: "01-26-013001-25004",
         name:"مجمع تجاري",
         contractPeriod: "25 سنة",
@@ -272,23 +289,6 @@ const PLOTS_GEOJSON = {
         desCard: ["desCards/25.pdf"],
       },
       geometry: { type: "Point", coordinates: [41.136624, 31.006757] },
-    },
-    {
-      type: "Feature",
-      properties: {
-        forsaNumber: "01-26-013001-25013",
-        name:"  بيع مواد البناء",
-        contractPeriod: "15 سنة",
-        area: 1200,
-        buckletPrice: 2000.0,
-        activity: "الأنشطة التجارية",
-        district: "حي الصقارين",
-        forusLink: "https://furas.momah.gov.sa/opportunity/01-26-013001-25013?type=Investment",
-        advertiseDate: "10/08/2026",
-        openEnvelopesDate: "20/10/2026",
-        desCard: ["desCards/26.pdf"],
-      },
-      geometry: { type: "Point", coordinates: [41.057057, 31.018516] },
     },
     {
       type: "Feature",
